@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Hello Cocos2d-JS</title> 
+    <script type="text/javascript" src="cocos2d-js-v3.10-lite.js" charset="UTF-8"></script>
+</head>
+<body>   
+    <canvas id="gameCanvas" width="800" height="450"></canvas>
+    <script type="text/javascript">
+          window.onload = function(){
+              cc.game.onStart = function(){
+
+                var MyLayer=cc.Layer.extend({
+                  init:function(){
+                    //this._size = cc.Director.getInstance().getWinSize(); // 获得游戏屏幕尺寸 
+                    this.gameLayer = cc.Layer.create(); // 创建名为“gameLayer”的新图层 
+                    this.addChild(this.gameLayer); //加在这个新图层 
+                    var bg = cc.Sprite.create("HelloWorld.png"); // 创建精灵加载图片“s_HelloWorld” 
+                    this.gameLayer.addChild(bg, 1); //在gameLayer层上加载这个精灵 
+                    bg.setAnchorPoint(cc.p(0.5, 0.5));// 设置锚点 
+                    //bg.setPosition(this._size.width / 2, this._size.height /2);// 设置位置 
+                  },
+
+                  onNewGame:function (pSender) 
+                  { 
+                    //this._size = cc.Director.getInstance().getWinSize(); // 获得屏幕尺寸大小 
+                    var scene = cc.Scene.create(); //创建新场景 
+                    var gsl = new GameSceneLayer(); //创建新场景 
+                    gsl.init(); // 初始化新图层scene.addChild(gsl,1); // 加载新场景 
+                    var bgLayer = cc.Layer.create(); // 创建新层 
+                    var bkPng = cc.Sprite.create(s_bg01); // 创建新精灵并加载图片 
+                    bgLayer.addChild(bkPng); // 将精灵加在进层 
+                    bkPng.setAnchorPoint(cc.p(0.5, 0.5)); // 设置锚点 
+                    bkPng.setPosition(this._size.width / 2,this._size.height / 2); // 设施位置 
+                    scene.addChild(bgLayer,0); //将层加载进场景 
+                    cc.Director.getInstance().replaceScene(cc.TransitionFade.create(1.2,scene));} // 场景切换 
+                });
+
+                  var MyScene = cc.Scene.extend({
+                      onEnter:function () {
+                          this._super();
+                          var layer = new MyLayer();
+                          this.addChild(layer);
+                          layer.init();
+                      }
+                  });
+
+                  cc.director.runScene(new MyScene());
+
+                  //load resources
+                  /*cc.LoaderScene.preload(["HelloWorld.png"], function () {
+                      var MyScene = cc.Scene.extend({
+                          onEnter:function () {
+                              this._super();
+                              var size = cc.director.getWinSize();
+                              var sprite = cc.Sprite.create("HelloWorld.png");
+                              sprite.setPosition(size.width / 2, size.height / 2);
+                              sprite.setScale(0.8);
+                              this.addChild(sprite, 0);
+
+                              var label = cc.LabelTTF.create("Hello World", "Arial", 40);
+                              label.setPosition(size.width / 2, size.height / 2);
+                              this.addChild(label, 1);
+                          }
+                      });
+                      cc.director.runScene(new MyScene());
+                  }, this);*/
+
+
+              };
+              cc.game.run("gameCanvas");
+          };
+    </script>
+</body>
+</html>
